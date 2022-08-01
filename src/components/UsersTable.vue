@@ -1,16 +1,18 @@
 <template>
   <div class="users-table">
-    <span class="hit">* Press enter to apply changes</span>
     <table>
       <thead>
       <tr>
         <th>Given Name</th>
         <th>Surname</th>
         <th>Phone Number</th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(row, rowKey) in userMatrix" v-bind:key="row">
+      <tr v-for="(row, rowKey) in userMatrix" v-bind:key="row"
+          @mouseover="isHovering = true"
+          @mouseout="isHovering = false">
         <td v-for="(col, colKey) in row" :key="colKey"
             @click="selectCell(rowKey, colKey)"
             @focusout="handleFocusOut"
@@ -25,6 +27,9 @@
                  v-on:keyup.enter="handleFocusOut"
                  @input="onChange">
         </td>
+        <td>
+          <button class="btn btn-inline" @click="onDeleteUser(rowKey)"><i class="bi bi-trash"></i></button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -32,13 +37,14 @@
 </template>
 
 <script>
-import { getAllUsers } from '@/services/user.service';
-import { update } from '@/services/user.service';
+import {getAllUsers} from '@/services/user.service';
+import {update, _delete} from '@/services/user.service';
 
 export default {
   name: 'UsersTable',
   data() {
     return {
+      isHovering: false,
       users: [],
       isSelected: false,
       selectedRow: null,
@@ -84,7 +90,10 @@ export default {
       const user = {...this.selectedUser}
       user[this.selectedAttr] = this.selectedValue;
       update(user);
-
+    },
+    onDeleteUser(idx) {
+      this.userMatrix = this.userMatrix.filter( (elem, i) => i !== idx)
+      _delete(this.users[idx].userName)
     }
   }
 }
@@ -107,10 +116,12 @@ table {
   display: grid;
   border-collapse: collapse;
   min-width: 100%;
+  padding: 0 10%;
   grid-template-columns:
     minmax(150px, 1.67fr)
     minmax(150px, 1.67fr)
-    minmax(150px, 1.67fr);
+    minmax(150px, 1.67fr)
+    minmax(20px, 0.6fr);
 }
 
 thead,

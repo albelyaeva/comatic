@@ -44,3 +44,12 @@ export const update = (user) => {
             headers: {...authHeader(), 'Content-Type': 'application/json'}
         })
 }
+
+export const _delete = (userName) => {
+
+    return axios.delete(`${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_PORT}/V1/Authentication/users?userName=${userName}`,
+            {
+            headers: {...authHeader()}
+        })
+
+}
