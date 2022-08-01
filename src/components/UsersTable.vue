@@ -10,9 +10,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(row, rowKey) in userMatrix" v-bind:key="row"
-          @mouseover="isHovering = true"
-          @mouseout="isHovering = false">
+      <tr v-for="(row, rowKey) in userMatrix" v-bind:key="row">
         <td v-for="(col, colKey) in row" :key="colKey"
             @click="selectCell(rowKey, colKey)"
             @focusout="handleFocusOut"
@@ -24,7 +22,6 @@
           <input v-show="isSelected && cellSelected(rowKey, colKey)"
                  :value="col"
                  type="text"
-                 v-on:keyup.enter="handleFocusOut"
                  @input="onChange">
         </td>
         <td>
@@ -44,7 +41,6 @@ export default {
   name: 'UsersTable',
   data() {
     return {
-      isHovering: false,
       users: [],
       isSelected: false,
       selectedRow: null,

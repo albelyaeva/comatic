@@ -1,5 +1,7 @@
+import TokenService from '@/services/token.service';
+
 export function authHeader() {
-    let token = JSON.parse(localStorage.getItem('token'));
+    let token = TokenService.getLocalAccessToken()
 
     if (token) {
         return {

@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
-import HomePage from '../components/HomePage'
-import LoginPage from '../components/LoginPage'
+import HomePage from '@/components/HomePage'
+import LoginPage from '@/components/LoginPage'
 import RegisterPage from '@/components/RegisterPage';
 import UsersTable from '@/components/UsersTable';
 
@@ -29,7 +29,7 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createWebHistory(process.env.VUE_APP_BASE_URL),
+    history: createWebHistory(),
     routes
 });
 
@@ -37,12 +37,11 @@ router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
     const publicPages = ['/login', '/registration'];
     const authRequired = !publicPages.includes(to.path);
-    const loggedIn = localStorage.getItem('token');
+    const loggedIn = localStorage.getItem('user');
 
     if (authRequired && !loggedIn) {
         return next('/login');
     }
-
     next();
 })
 
