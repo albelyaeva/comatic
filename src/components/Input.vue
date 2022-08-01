@@ -3,7 +3,14 @@
     <label :for="label">
       {{ label }}
     </label>
-      <input class="input form-control" :id="label" :type="type" :name="name" :value="value" @input="onInput" @change="onChange" />
+    <input class="input form-control"
+           :id="label"
+           :type="type"
+           :value="value"
+           :name="name"
+           :autocomplete="autocomplete"
+           @input="onInput"
+           @change="onChange"/>
   </div>
 </template>
 
@@ -22,6 +29,10 @@ export default {
     type: {
       type: String,
       default: 'text'
+    },
+    autocomplete: {
+      type: String,
+      default: 'on'
     }
   },
   computed: {

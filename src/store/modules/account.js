@@ -1,4 +1,4 @@
-import {login, logout} from '@/services/user.service';
+import {loginUser, logout, register} from '@/services/user.service';
 import router from '@/helpers/router';
 
 const user = JSON.parse(localStorage.getItem('token'));
@@ -7,16 +7,19 @@ const state = user
     ? { status: { loggedIn: true }, user }
     : { status: {}, user: null };
 
+const setUserToken = (token) => {
+    localStorage.setItem( 'token', JSON.stringify(token) );
+}
+
 const actions = {
     login({ dispatch, commit }, { username, password }) {
         commit('loginRequest', { username });
 
-        login(username, password)
+        loginUser(username, password)
             .then(
                 user => {
                     commit('loginSuccess', user);
-                    localStorage.setItem( 'token', JSON.stringify(user.data.data.token) );
-                    console.log(user.data.data.token)
+                    setUserToken(user.data.data.token);
                     router.push({name: 'Home'}).then(r => console.log(r));
                 },
                 error => {
@@ -24,6 +27,20 @@ const actions = {
                     dispatch('alert/error', error, { root: true });
                 }
             );
+    },
+    register({ dispatch, commit }, { user }) {
+        register(user)
+            .then(
+                user => {
+                    commit('registerSuccess', user);
+                    setUserToken(user.data.data.token);
+                    router.push({name: 'Home'}).then(r => console.log(r));
+                },
+            )
+            .catch(error => {
+                commit('registerFailure', error);
+                dispatch('alert/error', error, { root: true });
+            });
     },
     logout({ commit }) {
         logout();
@@ -42,6 +59,14 @@ const mutations = {
         state.user = user;
     },
     loginFailure(state) {
+        state.status = {};
+        state.user = null;
+    },
+    registerSuccess(state, user) {
+        state.status = {loggedIn: true};
+        state.user = user;
+    },
+    registerFailure(state) {
         state.status = {};
         state.user = null;
     },

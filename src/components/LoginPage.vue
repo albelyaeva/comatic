@@ -33,7 +33,6 @@ export default {
       this.password = event.target.value
     },
     onLoginClick: function () {
-      console.log(`${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_PORT}`)
       const { username, password } = this;
       this.login({username, password})
     }
@@ -47,5 +46,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 4%;
 }
 </style>
