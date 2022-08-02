@@ -16,9 +16,9 @@
             @focusout="handleFocusOut"
             :class="{'selected' : cellSelected(rowKey, colKey)}"
         >
-          <span @click="selectCell(rowKey, colKey)" v-if="!cellSelected(rowKey, colKey)">
+          <div @click="selectCell(rowKey, colKey)" v-if="!cellSelected(rowKey, colKey)">
             {{ col }}
-          </span>
+          </div>
           <input v-show="isSelected && cellSelected(rowKey, colKey)"
                  :value="col"
                  type="text"
@@ -101,11 +101,10 @@ export default {
   margin-top: 50px;
 }
 
-.table {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 35% 35% 40%;
-  max-width: 700px;
+.selected {
+  text {
+    border-bottom: solid grey 1px;
+  }
 }
 
 table {
@@ -118,6 +117,26 @@ table {
     minmax(150px, 1.67fr)
     minmax(150px, 1.67fr)
     minmax(20px, 0.6fr);
+
+  td {
+    cursor: pointer;
+  }
+
+  td:hover {
+    color: blue;
+  }
+
+  tr {
+    .btn {
+      visibility: hidden;
+    }
+  }
+
+  tr:hover {
+    .btn {
+      visibility: visible;
+    }
+  }
 }
 
 thead,
@@ -164,11 +183,6 @@ input, input[onfocus] {
   background-color: transparent;
   resize: none;
   outline: none;
-}
-
-.hit {
-  text-align: right;
-  color: #8b8a8b;
 }
 
 </style>
