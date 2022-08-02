@@ -137,7 +137,7 @@ td {
 th {
   position: sticky;
   top: 0;
-  background: #6c7ae0;
+  background: var(--app-color);
   text-align: left;
   font-weight: normal;
   font-size: 1.1rem;

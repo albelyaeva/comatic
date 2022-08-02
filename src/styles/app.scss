@@ -1,12 +1,8 @@
 :root {
   --input-border: #8b8a8b;
   --input-focus: #3FDA94;
-}
-
-.navigation-header {
-  a {
-    padding-right: 20px;
-  }
+  --app-color: #6c7ae0;
+  --content-color: #f8f6ff;
 }
 
 #app {
@@ -15,5 +11,4 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
